@@ -32,10 +32,14 @@ Coding guidance: Combine "clean, object-oriented code" with "working software".
 
 ## Your comments / remarks
 
-What would you do if you had more time? Which trade-offs did you take?
+Hello team, I had some fun completing this challenge and testing my coding skills. Had I had more time, I would have done the following:
 
-* FILL-ME 1
-* FILL-ME 2
+1. Implemented more unit tests for the parseCSVFile file
+2. removed Hamcrest library and coded the comparison of lists myself. I just wanted to find a simple solution that would do the comparison for me, but I may have gone out-of-scope.
 
+Following are the trade-offs I took:
 
-Have fun!
+1. I declared the parseCSVFile in IPersonService. I can imagine that, depending on the scale / type of problem (e.g. different formats have to be supported), I could have designed a separate service for that (PersonParserService).
+
+I hope you like the fact that I thought of the edge case where multiple people have been born on the same year,month,day. Looking forward to receiving your feedbacks!
+
