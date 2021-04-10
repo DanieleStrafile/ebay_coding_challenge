@@ -4,6 +4,33 @@ import java.time.LocalDate;
 
 public class Person {
 
+    public enum Gender {
+	MALE, FEMALE
+    }
+
+    private final String firstName;
+    private final Gender gender;
+    private final LocalDate dateOfBirth;
+
+    public Person(String firstName, Gender gender, LocalDate dateOfBirth) {
+	this.firstName = firstName;
+	this.gender = gender;
+	this.dateOfBirth = LocalDate.of(dateOfBirth.getYear(), dateOfBirth.getMonthValue(),
+		dateOfBirth.getDayOfMonth());
+    }
+
+    public String getFirstName() {
+	return firstName;
+    }
+
+    public Gender getGender() {
+	return gender;
+    }
+
+    public LocalDate getDateOfBirth() {
+	return LocalDate.of(dateOfBirth.getYear(), dateOfBirth.getMonthValue(), dateOfBirth.getDayOfMonth());
+    }
+
     @Override
     public int hashCode() {
 	final int prime = 31;
@@ -38,31 +65,9 @@ public class Person {
 	return true;
     }
 
-    public enum Gender {
-	MALE, FEMALE
-    }
-
-    private final String firstName;
-    private final Gender gender;
-    private final LocalDate dateOfBirth;
-
-    public Person(String firstName, Gender gender, LocalDate dateOfBirth) {
-	this.firstName = firstName;
-	this.gender = gender;
-	this.dateOfBirth = LocalDate.of(dateOfBirth.getYear(), dateOfBirth.getMonthValue(),
-		dateOfBirth.getDayOfMonth());
-    }
-
-    public String getFirstName() {
-	return firstName;
-    }
-
-    public Gender getGender() {
-	return gender;
-    }
-
-    public LocalDate getDateOfBirth() {
-	return LocalDate.of(dateOfBirth.getYear(), dateOfBirth.getMonthValue(), dateOfBirth.getDayOfMonth());
+    @Override
+    public String toString() {
+	return "Person [firstName=" + firstName + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + "]";
     }
 
 }
