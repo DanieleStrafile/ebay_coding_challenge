@@ -1,34 +1,8 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Person {
-
-    public enum Gender {
-	MALE, FEMALE
-    }
-
-    private final String firstName;
-    private final Gender gender;
-    private final Date dateOfBirth;
-
-    public Person(String firstName, Gender gender, Date dateOfBirth) {
-	this.firstName = firstName;
-	this.gender = gender;
-	this.dateOfBirth = new Date(dateOfBirth.getTime());
-    }
-
-    public String getFirstName() {
-	return firstName;
-    }
-
-    public Gender getGender() {
-	return gender;
-    }
-
-    public Date getDateOfBirth() {
-	return new Date(dateOfBirth.getTime());
-    }
 
     @Override
     public int hashCode() {
@@ -62,6 +36,33 @@ public class Person {
 	if (gender != other.gender)
 	    return false;
 	return true;
+    }
+
+    public enum Gender {
+	MALE, FEMALE
+    }
+
+    private final String firstName;
+    private final Gender gender;
+    private final LocalDate dateOfBirth;
+
+    public Person(String firstName, Gender gender, LocalDate dateOfBirth) {
+	this.firstName = firstName;
+	this.gender = gender;
+	this.dateOfBirth = LocalDate.of(dateOfBirth.getYear(), dateOfBirth.getMonthValue(),
+		dateOfBirth.getDayOfMonth());
+    }
+
+    public String getFirstName() {
+	return firstName;
+    }
+
+    public Gender getGender() {
+	return gender;
+    }
+
+    public LocalDate getDateOfBirth() {
+	return LocalDate.of(dateOfBirth.getYear(), dateOfBirth.getMonthValue(), dateOfBirth.getDayOfMonth());
     }
 
 }
