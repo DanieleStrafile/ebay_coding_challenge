@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.Test;
 
@@ -63,9 +62,9 @@ public class PersonServiceTest {
 
 	IPersonService service = new PersonService();
 
-	Optional<Person> person = service.getOldestPerson(null);
+	List<Person> oldestPeople = service.getOldest(null);
 
-	assertTrue(person.isEmpty());
+	assertTrue(oldestPeople.isEmpty());
 
     }
 
@@ -74,14 +73,14 @@ public class PersonServiceTest {
 
 	IPersonService service = new PersonService();
 
-	Optional<Person> person = service.getOldestPerson(new ArrayList<>());
+	List<Person> oldestPeople = service.getOldest(new ArrayList<>());
 
-	assertTrue(person.isEmpty());
+	assertTrue(oldestPeople.isEmpty());
 
     }
 
     @Test
-    public void when_people_then_return_oldest() {
+    public void when_one_oldest_then_return_oldest() {
 
 	List<Person> people = Arrays.asList(new Person("Miranda", Gender.FEMALE, LocalDate.ofEpochDay(1l)),
 		new Person("Anita", Gender.FEMALE, LocalDate.ofEpochDay(3l)),
@@ -89,9 +88,27 @@ public class PersonServiceTest {
 	IPersonService service = new PersonService();
 	Person expected = new Person("Anita", Gender.FEMALE, LocalDate.ofEpochDay(3l));
 
-	Optional<Person> person = service.getOldestPerson(people);
+	List<Person> oldestPeople = service.getOldest(people);
 
-	assertEquals(expected, person.get());
+	assertEquals(expected, oldestPeople.get(0));
+
+    }
+
+    @Test
+    public void when_several_oldest_then_return_all_oldest() {
+
+	List<Person> people = Arrays.asList(new Person("Miranda", Gender.FEMALE, LocalDate.ofEpochDay(1l)),
+		new Person("Anita", Gender.FEMALE, LocalDate.ofEpochDay(3l)),
+		new Person("Matthew", Gender.MALE, LocalDate.ofEpochDay(3l)),
+		new Person("Clark", Gender.MALE, LocalDate.ofEpochDay(2l)));
+	IPersonService service = new PersonService();
+	List<Person> expected = Arrays.asList(new Person("Anita", Gender.FEMALE, LocalDate.ofEpochDay(3l)),
+		new Person("Matthew", Gender.MALE, LocalDate.ofEpochDay(3l)));
+
+	List<Person> oldestPeople = service.getOldest(people);
+	oldestPeople.sort((person1, person2) -> person1.getFirstName().compareTo(person2.getFirstName()));
+
+	assertEquals(expected, oldestPeople);
 
     }
 

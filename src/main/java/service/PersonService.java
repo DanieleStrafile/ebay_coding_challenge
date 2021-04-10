@@ -1,7 +1,9 @@
 package service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import model.Person;
 import model.Person.Gender;
@@ -17,11 +19,18 @@ public class PersonService implements IPersonService {
     }
 
     @Override
-    public Optional<Person> getOldestPerson(List<Person> people) {
-	if (people == null) {
-	    return Optional.empty();
+    public List<Person> getOldest(List<Person> people) {
+
+	if (people == null || people.isEmpty()) {
+	    return new ArrayList<>();
 	}
-	return people.stream().max((person1, person2) -> person1.getDateOfBirth().compareTo(person2.getDateOfBirth()));
+
+	LocalDate oldestDate = people.stream()
+		.max((person1, person2) -> person1.getDateOfBirth().compareTo(person2.getDateOfBirth())).get()
+		.getDateOfBirth();
+
+	return people.stream().filter(person -> person.getDateOfBirth().equals(oldestDate))
+		.collect(Collectors.toList());
     }
 
 }
